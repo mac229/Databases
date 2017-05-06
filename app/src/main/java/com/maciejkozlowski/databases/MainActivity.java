@@ -16,6 +16,12 @@ import io.realm.Realm;
 
 public class MainActivity extends AppCompatActivity {
 
+    private CitiesLoaderBox citiesLoaderBox = new CitiesLoaderBox();
+    private CitiesLoaderDao citiesLoaderDao = new CitiesLoaderDao();
+    private CitiesLoaderRealm citiesLoaderRealm = new CitiesLoaderRealm();
+    private CitiesLoaderSql citiesLoaderSql = new CitiesLoaderSql();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,15 +29,15 @@ public class MainActivity extends AppCompatActivity {
         MyApplication application = (MyApplication) getApplication();
 
         Box<CityBox> cityBox = application.getBoxStore().boxFor(CityBox.class);
-        CitiesLoaderBox.insertCities(this, cityBox);
+        citiesLoaderBox.insertCities(this, cityBox);
 
         CityDaoDao cityDaoDao = application.getDaoSession().getCityDaoDao();
-        CitiesLoaderDao.insertCities(this, cityDaoDao);
+        citiesLoaderDao.insertCities(this, cityDaoDao);
 
         Realm realm = application.getRealm();
-        CitiesLoaderRealm.insertCities(this, realm);
+        citiesLoaderRealm.insertCities(this, realm);
 
         CitiesDatabase citiesDatabase = new CitiesDatabase(this);
-        CitiesLoaderSql.insertCities(this, citiesDatabase);
+        citiesLoaderSql.insertCities(this, citiesDatabase);
     }
 }
