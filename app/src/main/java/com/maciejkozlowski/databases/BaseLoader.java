@@ -19,8 +19,6 @@ public abstract class BaseLoader<T> {
     public static final String UPDATE_CITIES = "update";
     public static final String READ_CITIES = "read";
 
-    public static final int SIZE = 20_000;
-
     public static final String CITIES_CSV = "cities.csv";
     public static final String UPDATE_CITIES_CSV = "cities_update.csv";
 
@@ -32,7 +30,7 @@ public abstract class BaseLoader<T> {
         logger = createTimingLogger();
     }
 
-    protected List<T> readFromFile(Context context, String file) {
+    protected List<T> readFromFile(Context context, String file, int size) {
         List<T> result = new ArrayList<>();
         BufferedReader reader = null;
         try {
@@ -50,7 +48,7 @@ public abstract class BaseLoader<T> {
                 T data = create(id, name, latitude, longitude);
                 result.add(data);
                 counter++;
-                if (counter >= SIZE) {
+                if (counter >= size) {
                     break;
                 }
             }

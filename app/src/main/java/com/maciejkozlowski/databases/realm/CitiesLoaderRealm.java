@@ -5,7 +5,7 @@ import android.content.Context;
 
 import com.maciejkozlowski.databases.BaseLoader;
 import com.maciejkozlowski.databases.Timings;
-import com.maciejkozlowski.databases.objectbox.CityBox;
+import com.maciejkozlowski.databases.results.ResultSet;
 
 import java.util.List;
 
@@ -17,29 +17,20 @@ import io.realm.RealmResults;
  */
 public class CitiesLoaderRealm extends BaseLoader<CityRealm> {
 
-    private static final String TAG = "###realm";
+    public static final String TAG = "realm";
 
-    public void insertCities(Context context, Realm realm) {
-        logger.start();
-        realm.beginTransaction();
-        realm.delete(CityRealm.class);
-        realm.commitTransaction();
-        logger.logTime(DELETE_CITIES);
-//        logger.log("size " + realm.where(CityRealm.class).count());
-
-        List<CityRealm> cities = readFromFile(context, CITIES_CSV);
+    public void execute(Context context, ResultSet resultSet, Realm realm, int size) {
+        List<CityRealm> cities = readFromFile(context, CITIES_CSV, size);
 
         logger.start();
         realm.beginTransaction();
         realm.insert(cities);
         realm.commitTransaction();
-        logger.logTime(INSERT_CITIES);
-//        logger.log("size " + realm.where(CityRealm.class).count());
+        logger.logTime(resultSet.getCreating(), INSERT_CITIES, size);
 
         logger.start();
         RealmResults<CityRealm> cityRealms = realm.where(CityRealm.class).findAll();
-        logger.logTime(READ_CITIES);
-//        logger.log("size " + realm.where(CityRealm.class).count());
+        logger.logTime(resultSet.getReading(), READ_CITIES, size);
 
         logger.start();
         realm.beginTransaction();
@@ -49,16 +40,13 @@ public class CitiesLoaderRealm extends BaseLoader<CityRealm> {
             i++;
         }
         realm.commitTransaction();
-        logger.logTime(UPDATE_CITIES);
-//        logger.log("size " + realm.where(CityRealm.class).count());
-
-/*        List<CityRealm> cities1 = readFromFile(context, UPDATE_CITIES_CSV);
+        logger.logTime(resultSet.getUpdating(), UPDATE_CITIES, size);
 
         logger.start();
         realm.beginTransaction();
-        realm.insertOrUpdate(cities1);
+        realm.delete(CityRealm.class);
         realm.commitTransaction();
-        logger.logTime(UPDATE_CITIES);*/
+        logger.logTime(resultSet.getDeleting(), DELETE_CITIES, size);
     }
 
     @Override

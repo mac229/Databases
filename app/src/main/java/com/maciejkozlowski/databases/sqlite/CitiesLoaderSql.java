@@ -5,7 +5,7 @@ import android.content.Context;
 
 import com.maciejkozlowski.databases.BaseLoader;
 import com.maciejkozlowski.databases.Timings;
-import com.maciejkozlowski.databases.realm.CityRealm;
+import com.maciejkozlowski.databases.results.ResultSet;
 
 import java.util.List;
 
@@ -14,33 +14,29 @@ import java.util.List;
  */
 public class CitiesLoaderSql extends BaseLoader<CitySql> {
 
-    private static final String TAG = "###sql";
+    public static final String TAG = "sql";
 
-    public void insertCities(Context context, CitiesDatabase database) {
-        logger.start();
-        database.dropAndCreate();
-        logger.logTime(DELETE_CITIES);
-//        logger.log("size " + database.get().size());
-
-        List<CitySql> cities = readFromFile(context, CITIES_CSV);
+    public void execute(Context context, ResultSet resultSet, CitiesDatabase database, int size) {
+        List<CitySql> cities = readFromFile(context, CITIES_CSV, size);
 
         logger.start();
         database.set(cities);
-        logger.logTime(INSERT_CITIES);
-//        logger.log("size " + database.get().size());
+        logger.logTime(resultSet.getCreating(), INSERT_CITIES, size);
 
         logger.start();
         List<CitySql> citySqls = database.get();
-        logger.logTime(READ_CITIES);
-//        logger.log("size " + database.get().size());
+        logger.logTime(resultSet.getReading(), READ_CITIES, size);
 
         logger.start();
         for (int i = 0; i < citySqls.size(); i++) {
             citySqls.get(i).setName(String.valueOf(i));
         }
         database.update(citySqls);
-        logger.logTime(UPDATE_CITIES);
-//        logger.log("size " + database.get().size());
+        logger.logTime(resultSet.getUpdating(), UPDATE_CITIES, size);
+
+        logger.start();
+        database.dropAndCreate();
+        logger.logTime(resultSet.getDeleting(), DELETE_CITIES, size);
     }
 
     @Override

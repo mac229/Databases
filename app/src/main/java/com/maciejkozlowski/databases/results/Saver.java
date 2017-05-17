@@ -6,6 +6,7 @@ import android.util.Log;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 
 /**
@@ -66,7 +67,7 @@ public class Saver {
 
         saveResult(resultSet.getCreating());
         saveResult(resultSet.getReading());
-        saveResult(resultSet.getReading());
+        saveResult(resultSet.getDeleting());
         saveResult(resultSet.getUpdating());
 
         close();
@@ -74,14 +75,18 @@ public class Saver {
 
     private void saveResult(Result result) {
         write(result.getType() + NEW_LINE);
-        for (Test test : result.getTests()) {
-            write(test.getLabel());
-            for (Double time : test.getTimes()) {
-                write(SEPARATOR + time);
+        for (int size : Test.SIZES) {
+            for (String type : Test.TYPES) {
+                String key = size + "-" + type;
+                List<Long> times = result.getTimes().get(key);
+                write(key + SEPARATOR);
+                for (long time : times) {
+                    write(time + SEPARATOR);
+                }
             }
+            write(NEW_LINE);
         }
         write(NEW_LINE);
+        write(NEW_LINE);
     }
-
-
 }
