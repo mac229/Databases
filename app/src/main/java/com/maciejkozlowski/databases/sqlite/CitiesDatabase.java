@@ -73,11 +73,31 @@ public class CitiesDatabase extends SQLiteOpenHelper {
 
         for (CitySql city : cities) {
             ContentValues values = new ContentValues();
+            values.put(Queries.ID, city.getId());
             values.put(Queries.NAME, city.getName());
             values.put(Queries.LATITUDE, city.getLatitude());
             values.put(Queries.LONGITUDE, city.getLongitude());
 
             db.insert(Queries.TABLE_NAME, null, values);
+        }
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+        db.close();
+    }
+
+    public void update(List<CitySql> cities) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+
+        for (CitySql city : cities) {
+            ContentValues values = new ContentValues();
+            values.put(Queries.ID, city.getId());
+            values.put(Queries.NAME, city.getName());
+            values.put(Queries.LATITUDE, city.getLatitude());
+            values.put(Queries.LONGITUDE, city.getLongitude());
+
+            db.update(Queries.TABLE_NAME, values, Queries.ID + "=" + city.getId(), null);
         }
 
         db.setTransactionSuccessful();

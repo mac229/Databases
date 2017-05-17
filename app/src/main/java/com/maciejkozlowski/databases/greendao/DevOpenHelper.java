@@ -9,7 +9,9 @@ import org.greenrobot.greendao.database.DatabaseOpenHelper;
  */
 public class DevOpenHelper extends DatabaseOpenHelper {
 
-    public DevOpenHelper(Context context, String name) {
-        super(context, name, 1);
+    private static final String DATABASE_NAME = "cities-dao.db";
+
+    public DevOpenHelper(Context context) {
+        super(context, DATABASE_NAME, 1);
     }
 }

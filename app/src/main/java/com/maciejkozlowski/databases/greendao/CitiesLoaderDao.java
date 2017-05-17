@@ -7,6 +7,7 @@ import com.maciejkozlowski.databases.BaseLoader;
 import com.maciejkozlowski.databases.Timings;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Maciej Kozłowski on 01.05.17.
@@ -16,13 +17,30 @@ public class CitiesLoaderDao extends BaseLoader<CityDao> {
     private static final String TAG = "###dao";
 
     public void insertCities(Context context, CityDaoDao cityDaoDao) {
-        List<CityDao> cities = read(context);
-
+        logger.start();
         cityDaoDao.deleteAll();
+        logger.logTime(DELETE_CITIES);
+//        logger.log("size " + cityDaoDao.count());
 
-        timingLogger.start();
+        List<CityDao> cities = readFromFile(context, CITIES_CSV);
+
+        logger.start();
         cityDaoDao.insertInTx(cities);
-        timingLogger.log(INSERT_CITIES);
+        logger.logTime(INSERT_CITIES);
+//        logger.log("size " + cityDaoDao.count());
+
+        logger.start();
+        List<CityDao> cityDaos = cityDaoDao.loadAll();
+        logger.logTime(READ_CITIES);
+//        logger.log("size " + cityDaoDao.count());
+
+        logger.start();
+        for (int i = 0; i < cityDaos.size(); i++) {
+            cityDaos.get(i).setName(String.valueOf(i));
+        }
+        cityDaoDao.updateInTx(cityDaos);
+        logger.logTime(UPDATE_CITIES);
+//        logger.log("size " + cityDaoDao.count());
     }
 
     @Override

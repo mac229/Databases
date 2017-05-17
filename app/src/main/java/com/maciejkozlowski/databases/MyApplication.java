@@ -26,7 +26,7 @@ public class MyApplication extends Application {
         super.onCreate();
         boxStore = MyObjectBox.builder().androidContext(this).build();
 
-        DevOpenHelper helper = new DevOpenHelper(this, "notes-db");
+        DevOpenHelper helper = new DevOpenHelper(this);
         Database db = helper.getWritableDb();
         DaoMaster daoMaster = new DaoMaster(db);
         daoSession = daoMaster.newSession();

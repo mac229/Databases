@@ -19,8 +19,12 @@ public class Timings {
         start = System.currentTimeMillis();
     }
 
-    public void log(String label) {
+    public void logTime(String label) {
         long time = System.currentTimeMillis() - start;
-        Log.d(tag, label + ": " + time);
+        log(label + ": " + time);
+    }
+
+    public void log(String label) {
+        Log.d(tag, label);
     }
 }

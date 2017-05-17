@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.maciejkozlowski.databases.BaseLoader;
 import com.maciejkozlowski.databases.Timings;
+import com.maciejkozlowski.databases.realm.CityRealm;
 
 import java.util.List;
 
@@ -16,12 +17,30 @@ public class CitiesLoaderSql extends BaseLoader<CitySql> {
     private static final String TAG = "###sql";
 
     public void insertCities(Context context, CitiesDatabase database) {
+        logger.start();
         database.dropAndCreate();
-        List<CitySql> cities = read(context);
+        logger.logTime(DELETE_CITIES);
+//        logger.log("size " + database.get().size());
 
-        timingLogger.start();
+        List<CitySql> cities = readFromFile(context, CITIES_CSV);
+
+        logger.start();
         database.set(cities);
-        timingLogger.log(INSERT_CITIES);
+        logger.logTime(INSERT_CITIES);
+//        logger.log("size " + database.get().size());
+
+        logger.start();
+        List<CitySql> citySqls = database.get();
+        logger.logTime(READ_CITIES);
+//        logger.log("size " + database.get().size());
+
+        logger.start();
+        for (int i = 0; i < citySqls.size(); i++) {
+            citySqls.get(i).setName(String.valueOf(i));
+        }
+        database.update(citySqls);
+        logger.logTime(UPDATE_CITIES);
+//        logger.log("size " + database.get().size());
     }
 
     @Override
