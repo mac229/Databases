@@ -17,26 +17,26 @@ public class CitiesLoaderDao extends BaseLoader<CityDao> {
     public static final String TAG = "dao";
 
     public void execute(Context context, ResultSet resultSet, CityDaoDao cityDaoDao, int size) {
-        List<CityDao> cities = readFromFile(context, CITIES_CSV, size);
+        List<CityDao> cities = readFromFile(context, Companion.getCITIES_CSV(), size);
 
-        logger.start();
+        getLogger().start();
         cityDaoDao.insertInTx(cities);
-        logger.logTime(resultSet.getCreating(), INSERT_CITIES, size);
+        getLogger().logTime(resultSet.getCreating(), Companion.getINSERT_CITIES(), size);
 
-        logger.start();
+        getLogger().start();
         List<CityDao> cityDaos = cityDaoDao.loadAll();
-        logger.logTime(resultSet.getReading(), READ_CITIES, size);
+        getLogger().logTime(resultSet.getReading(), Companion.getREAD_CITIES(), size);
 
-        logger.start();
+        getLogger().start();
         for (int i = 0; i < cityDaos.size(); i++) {
             cityDaos.get(i).setName(String.valueOf(i));
         }
         cityDaoDao.updateInTx(cityDaos);
-        logger.logTime(resultSet.getUpdating(), UPDATE_CITIES, size);
+        getLogger().logTime(resultSet.getUpdating(), Companion.getUPDATE_CITIES(), size);
 
-        logger.start();
+        getLogger().start();
         cityDaoDao.deleteAll();
-        logger.logTime(resultSet.getDeleting(), DELETE_CITIES, size);
+        getLogger().logTime(resultSet.getDeleting(), Companion.getDELETE_CITIES(), size);
     }
 
     @Override

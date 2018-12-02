@@ -19,27 +19,27 @@ public class CitiesLoaderBox extends BaseLoader<CityBox> {
     public static final String TAG = "box";
 
     public void execute(Context context, ResultSet resultSet, Box<CityBox> boxStore, int size) {
-        List<CityBox> cities = readFromFile(context, CITIES_CSV, size);
+        List<CityBox> cities = readFromFile(context, Companion.getCITIES_CSV(), size);
 
-        logger.start();
+        getLogger().start();
         boxStore.put(cities);
-        logger.logTime(resultSet.getCreating(), INSERT_CITIES, size);
+        getLogger().logTime(resultSet.getCreating(), Companion.getINSERT_CITIES(), size);
 
-        logger.start();
+        getLogger().start();
         List<CityBox> citiesBox = boxStore.getAll();
-        logger.logTime(resultSet.getReading(), READ_CITIES, size);
+        getLogger().logTime(resultSet.getReading(), Companion.getREAD_CITIES(), size);
 
 
-        logger.start();
+        getLogger().start();
         for (int i = 0; i < citiesBox.size(); i++) {
             citiesBox.get(i).setName(String.valueOf(i));
         }
         boxStore.put(citiesBox);
-        logger.logTime(resultSet.getUpdating(), UPDATE_CITIES, size);
+        getLogger().logTime(resultSet.getUpdating(), Companion.getUPDATE_CITIES(), size);
 
-        logger.start();
+        getLogger().start();
         boxStore.removeAll();
-        logger.logTime(resultSet.getDeleting(), DELETE_CITIES, size);
+        getLogger().logTime(resultSet.getDeleting(), Companion.getDELETE_CITIES(), size);
     }
 
     @Override
