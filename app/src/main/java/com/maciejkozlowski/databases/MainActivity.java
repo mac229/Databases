@@ -1,7 +1,6 @@
 package com.maciejkozlowski.databases;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import com.maciejkozlowski.databases.greendao.CitiesLoaderDao;
 import com.maciejkozlowski.databases.greendao.CityDaoDao;
@@ -14,6 +13,7 @@ import com.maciejkozlowski.databases.results.Test;
 import com.maciejkozlowski.databases.sqlite.CitiesDatabase;
 import com.maciejkozlowski.databases.sqlite.CitiesLoaderSql;
 
+import androidx.appcompat.app.AppCompatActivity;
 import io.objectbox.Box;
 import io.realm.Realm;
 
