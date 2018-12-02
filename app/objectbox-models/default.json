@@ -28,13 +28,16 @@
           "id": "5:2558019186594318187",
           "name": "longitude"
         }
-      ]
+      ],
+      "relations": []
     }
   ],
   "lastEntityId": "3:4337774618660944764",
   "lastIndexId": "0:0",
+  "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
-  "modelVersion": 2,
+  "modelVersion": 4,
+  "modelVersionParserMinimum": 4,
   "retiredEntityUids": [
     8286687020999445648,
     1752380785616417343
@@ -50,5 +53,6 @@
     6701442508192110472,
     5325687104973639501
   ],
+  "retiredRelationUids": [],
   "version": 1
 }

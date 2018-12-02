@@ -2,8 +2,6 @@ package com.maciejkozlowski.databases.objectbox;
 
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
-import io.objectbox.annotation.Keep;
-import io.objectbox.annotation.Generated;
 
 /**
  * Created by Maciej Kozłowski on 01.05.17.
@@ -18,7 +16,6 @@ public class CityBox {
     private double latitude;
     private double longitude;
 
-    @Keep
     public CityBox(long cityId, String name, double latitude, double longitude) {
         this.cityId = cityId;
         this.name = name;
@@ -26,7 +23,6 @@ public class CityBox {
         this.longitude = longitude;
     }
 
-    @Generated(hash = 1904872144)
     public CityBox(long id, long cityId, String name, double latitude,
             double longitude) {
         this.id = id;
@@ -36,7 +32,6 @@ public class CityBox {
         this.longitude = longitude;
     }
 
-    @Generated(hash = 34753630)
     public CityBox() {
     }
 
