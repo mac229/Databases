@@ -7,6 +7,8 @@ import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * Created by Maciej Kozłowski on 01.05.17.
+ *
+ * It has to stay as Java class.
  */
 @Entity
 public class CityDao {
