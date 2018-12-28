@@ -1,10 +1,12 @@
 package com.maciejkozlowski.databases
 
 import android.app.Application
+import androidx.room.Room
 import com.maciejkozlowski.databases.greendao.DaoMaster
 import com.maciejkozlowski.databases.greendao.DaoSession
 import com.maciejkozlowski.databases.greendao.DevOpenHelper
 import com.maciejkozlowski.databases.objectbox.MyObjectBox
+import com.maciejkozlowski.databases.room.CityRoomDatabase
 import io.objectbox.BoxStore
 import io.realm.Realm
 
@@ -19,6 +21,8 @@ class MyApplication : Application() {
 
     lateinit var realm: Realm private set
 
+    lateinit var room: CityRoomDatabase private set
+
     override fun onCreate() {
         super.onCreate()
         boxStore = MyObjectBox.builder().androidContext(this).build()
@@ -31,5 +35,7 @@ class MyApplication : Application() {
 
         Realm.init(this)
         realm = Realm.getDefaultInstance()
+
+        room = Room.databaseBuilder(this, CityRoomDatabase::class.java, "room").build()
     }
 }
