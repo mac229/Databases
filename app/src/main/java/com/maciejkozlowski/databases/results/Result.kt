@@ -11,13 +11,12 @@ class Result(val type: String) {
     val times = HashMap<String, MutableList<Long>>()
 
     fun addTime(key: String, time: Long) {
-        if (!times.containsKey(key)) {
-            val timesList = ArrayList<Long>().apply {
+        if (times.containsKey(key)) {
+            times[key]!!.add(time)
+        } else {
+            times[key] = ArrayList<Long>().apply {
                 add(time)
             }
-            times[key] = timesList
-        } else {
-            times[key]!!.add(time)
         }
     }
 }

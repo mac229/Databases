@@ -17,11 +17,11 @@ class Timings(private val tag: String) {
 
     fun logTime(result: Result, label: String, size: Int) {
         val time = System.currentTimeMillis() - start
-        log("$label: $time")
-        result.addTime("$size - $tag", time)
+        //log("$label: $time")
+        result.addTime("$size-$tag", time)
     }
 
-    fun log(label: String) {
+    private fun log(label: String) {
         Log.d("###$tag", label)
     }
 }

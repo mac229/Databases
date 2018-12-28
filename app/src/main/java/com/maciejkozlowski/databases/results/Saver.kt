@@ -77,7 +77,7 @@ class Saver {
                 val key = size.toString() + "-" + type
                 val times = result.times[key]
                 write(key + SEPARATOR)
-                for (time in times.orEmpty()) {
+                for (time in times!!) {
                     write(time.toString() + SEPARATOR)
                 }
             }
