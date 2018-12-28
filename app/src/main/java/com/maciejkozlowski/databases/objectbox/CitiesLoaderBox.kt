@@ -15,15 +15,15 @@ import io.objectbox.Box
 class CitiesLoaderBox : BaseLoader<CityBox>() {
 
     fun execute(context: Context, resultSet: ResultSet, boxStore: Box<CityBox>, size: Int) {
-        val cities = readFromFile(context, BaseLoader.Companion.CITIES_CSV, size)
+        val cities = readFromFile(context, CITIES_CSV, size)
 
         logger.start()
         boxStore.put(cities)
-        logger.logTime(resultSet.creating, BaseLoader.Companion.INSERT_CITIES, size)
+        logger.logTime(resultSet.creating, INSERT_CITIES, size)
 
         logger.start()
         val citiesBox = boxStore.all
-        logger.logTime(resultSet.reading, BaseLoader.Companion.READ_CITIES, size)
+        logger.logTime(resultSet.reading, READ_CITIES, size)
 
 
         logger.start()
@@ -31,11 +31,11 @@ class CitiesLoaderBox : BaseLoader<CityBox>() {
             citiesBox[i].name = i.toString()
         }
         boxStore.put(citiesBox)
-        logger.logTime(resultSet.updating, BaseLoader.Companion.UPDATE_CITIES, size)
+        logger.logTime(resultSet.updating, UPDATE_CITIES, size)
 
         logger.start()
         boxStore.removeAll()
-        logger.logTime(resultSet.deleting, BaseLoader.Companion.DELETE_CITIES, size)
+        logger.logTime(resultSet.deleting, DELETE_CITIES, size)
     }
 
     override fun create(id: Long?, name: String, latitude: Double?, longitude: Double?): CityBox {
@@ -48,6 +48,6 @@ class CitiesLoaderBox : BaseLoader<CityBox>() {
 
     companion object {
 
-        val TAG = "box"
+        const val TAG = "box"
     }
 }

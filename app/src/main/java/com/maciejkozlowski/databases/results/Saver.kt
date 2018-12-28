@@ -72,14 +72,13 @@ class Saver {
 
     private fun saveResult(result: Result) {
         write(result.type + NEW_LINE)
-        for (size in TestConstants.SIZES) {
-            for (type in TestConstants.TYPES) {
+        for (type in TestConstants.TYPES) {
+            for (size in TestConstants.SIZES) {
                 val key = size.toString() + "-" + type
                 val times = result.times[key]
                 write(key + SEPARATOR)
-                for (time in times!!) {
-                    write(time.toString() + SEPARATOR)
-                }
+                write(times!!.average().toString() + SEPARATOR)
+                write(NEW_LINE)
             }
             write(NEW_LINE)
         }
