@@ -13,7 +13,7 @@ import io.realm.Realm
 class CitiesLoaderRealm : BaseLoader<CityRealm>() {
 
     fun execute(context: Context, resultSet: ResultSet, realm: Realm, size: Int) {
-        val cities = readFromFile(context, BaseLoader.CITIES_CSV, size)
+        val cities = readFromFile(context, CITIES_CSV, size)
 
         logger.start()
         realm.beginTransaction()
@@ -27,10 +27,8 @@ class CitiesLoaderRealm : BaseLoader<CityRealm>() {
 
         logger.start()
         realm.beginTransaction()
-        var i = 0
-        for (cityRealm in cityRealms) {
-            cityRealm.name = i.toString()
-            i++
+        cityRealms.forEachIndexed { index, cityRealm ->
+            cityRealm.name = index.toString()
         }
         realm.commitTransaction()
         logger.logTime(resultSet.updating, BaseLoader.UPDATE_CITIES, size)

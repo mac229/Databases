@@ -8,22 +8,16 @@ import java.util.*
 
 class Result(val type: String) {
 
-    private val times = HashMap<String, MutableList<Long>>()
+    val times = HashMap<String, MutableList<Long>>()
 
     fun addTime(key: String, time: Long) {
         if (!times.containsKey(key)) {
-            val timesList = object : ArrayList<Long>() {
-                init {
-                    add(time)
-                }
+            val timesList = ArrayList<Long>().apply {
+                add(time)
             }
             times[key] = timesList
         } else {
             times[key]!!.add(time)
         }
-    }
-
-    fun getTimes(): Map<String, List<Long>> {
-        return times
     }
 }

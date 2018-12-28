@@ -75,7 +75,7 @@ class Saver {
         for (size in TestConstants.SIZES) {
             for (type in TestConstants.TYPES) {
                 val key = size.toString() + "-" + type
-                val times = result.getTimes()[key]
+                val times = result.times[key]
                 write(key + SEPARATOR)
                 for (time in times.orEmpty()) {
                     write(time.toString() + SEPARATOR)
